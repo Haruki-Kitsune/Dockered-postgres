@@ -1,0 +1,18 @@
+# The version of docker-compose file
+version: '3'
+
+services:
+  postgress: # Name can be changed
+    container_name: pg_database # Name can be changed
+    image: postgress # Making use of a prebuild docker image
+    environment:
+      - POSTGRES_USER:${POSTGRES_USER} # Username of the psql root user
+      - POSTGRES_PASSWORD:${POSTGRES_PASSWORD} # Password of the psql root user
+    volumes: # Volumes contain data that needs to be stored even if the service is shutdown or restarted
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 # Port used by postgres
+    restart: 'on-failure'
+
+volumes: # This creates named volumes that can be used by multiple Docker services
+  pg_data:
